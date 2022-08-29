@@ -1,4 +1,4 @@
-#Frigefy project! 
+# Frigefy project! 
 
 I've created a couple of folders where we can sort all the data we will be using in the projec to have a clear and easy to follow project. 
 
