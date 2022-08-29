@@ -6,7 +6,7 @@ The assets folder will contain all of the images we plan on using, if we are usi
 
 The components folder will contain all of the custom components that we make, that are specifically for the project.
 
-I have also created a separate UI folder to store all the custom components we make related to the UI, this could be like a <Header />, <Footer />, <Button />, etc.
+I have also created a separate UI folder to store all the custom components we make related to the UI, this could be like a {<Header />, <Footer />, <Button />}, etc.
 
 There is a hooks folder, in case we want to create a custom hook, for example something like use-http to make API calls, or even a custom hook for firebase stuff.
 
