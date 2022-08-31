@@ -2,7 +2,7 @@ import { recipeActions } from "./recipe-slice";
 
 const apiKey = process.env.REACT_APP_apiKey;
 
-// https://api.spoonacular.com/recipes/complexSearch?apiKey=0e4aa105f5f04676b653e053371e7686&query=pasta&includeIngredients=cheese,+tomato&fillIngredients=true
+// https://api.spoonacular.com/recipes/complexSearch?apiKey=[API_KEY]&query=pasta&includeIngredients=cheese,+tomato&fillIngredients=true
 //To add query endpoints = `&query=${query words separated by commas}`
 //To add fridge items to the edpoint = `&includeIngredients=${fridgeItems separated by commas}`
 //To add filters `&diet=${diet}&cuisine=${cuisine separated by commas}&intolerances=${intolerances separated by commas}
