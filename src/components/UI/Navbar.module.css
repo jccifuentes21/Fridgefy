@@ -1,0 +1,23 @@
+.nav-bar {
+  display: flex;
+  align-items: center;
+  padding: 0 1rem;
+  justify-content: space-between;
+  background-color: #ccc;
+  color: black;
+  height: 4rem;
+}
+
+.button-group{
+  display: flex;
+  align-items: center;
+}
+
+.nav-buttons {
+  margin: 0 0.5rem;
+}
+
+.log-buttons{
+  margin: 0 0.5rem;
+}
+
