@@ -1,6 +1,8 @@
+import classes from './Cart.module.css'
+
 const Cart = () => {
   return (
-    <div>Cart</div>
+    <div className={classes['recipes-sidebar']}>Cart</div>
   )
 }
 

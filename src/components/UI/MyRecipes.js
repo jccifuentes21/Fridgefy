@@ -1,6 +1,10 @@
+import classes from './MyRecipes.module.css'
+
 const MyRecipes = () => {
   return (
-    <div>MyRecipes</div>
+    <div className={classes['recipes-sidebar']}>
+      <div>My recipes</div>
+    </div>
   )
 }
 

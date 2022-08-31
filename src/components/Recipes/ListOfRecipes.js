@@ -1,7 +1,6 @@
-import React from "react";
 
 import { useSelector } from "react-redux";
-import Recipe from "./Recipe";
+import RecipeItem from "./RecipeItem";
 
 const DUMMY_RECIPES = [
   {
@@ -101,10 +100,20 @@ const DUMMY_RECIPES = [
 
 const ListOfRecipes = () => {
   // const recipes = useSelector((state) => state.recipes.recipes);
-  
-  return DUMMY_RECIPES.map((recipe) => {
-    return <Recipe key={recipe.id} recipe={recipe} />;
-  });
+  return (
+    <>
+      {DUMMY_RECIPES.map((recipe) => (
+        <RecipeItem
+          key={recipe.id}
+          id={recipe.id}
+          title={recipe.title}
+          image={recipe.image}
+          readyInMinutes={recipe.readyInMinutes}
+          url={recipe.sourceUrl}
+        />
+      ))}
+    </>
+  );
 };
 
 export default ListOfRecipes;

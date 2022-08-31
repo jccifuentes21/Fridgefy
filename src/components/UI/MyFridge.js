@@ -1,6 +1,8 @@
+import classes from './MyFridge.module.css'
+
 const MyFridge = () => {
   return (
-    <div>MyFridge</div>
+    <div className={classes['recipes-sidebar']}>MyFridge</div>
   )
 }
 
