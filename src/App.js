@@ -1,23 +1,21 @@
-import { useEffect } from "react";
-import { useDispatch } from "react-redux/es/exports";
-import { getRecipeData } from "./store/recipes-actions";
-import ListOfRecipes from "./components/Recipes/ListOfRecipes";
+import { Routes, Route, Navigate } from "react-router-dom";
 
-import Content from "./components/UI/Content";
 import Navbar from "./components/UI/Navbar";
+import WelcomePage from "./pages/WelcomePage";
+import RecipesPage from "./pages/RecipesPage";
+import MyShoppingList from "./pages/MyShoppingList";
 
 function App() {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getRecipeData());
-  }, [dispatch]);
 
   return (
     <>
-      <Navbar />
-      <Content />
-      {/* <ListOfRecipes /> */}
+    <Navbar />
+    <Routes>
+      <Route path="/" element={<Navigate replace to="/welcome"/>}/>
+      <Route path="/welcome" element={<WelcomePage />}/>
+      <Route path="/recipes" element={<RecipesPage />} />
+      <Route path="/shopping-list" element={<MyShoppingList />} />
+    </Routes>
     </>
   );
 }

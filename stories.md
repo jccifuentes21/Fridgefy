@@ -31,8 +31,33 @@ Logged users page:
     -Items to buy column
       -A new state should be created, (missingIngredients array) with all the ingredients that are missing for all the selectedRecipes vs fridgeIngredients
 
+Pages:
+-Home page
+-Recipes page
+  All Users:
+    -NEEDS TO KNOW => (isLoggedin state, recipes array)
+    -Show all the recipes from the search query with filters
+    -Only show the cuisine, diet and intolerances filters
+    -Show log in button
+    -Hide the recipes and my shopping list buttons
+  
+  Logged in Users
+    -Show the recipes and my shopping list buttons
+    -Show all the recipes from the search query
+    -Show the fridge sidebar with ability to add items to the fridge, which also add items to the database
+    -Add the ability to check these items, and if checked, add them to the filters
+    -Ability to add recipes to the 'shopping cart'
+    -Show log out button
+  
+-My shopping list page
+  ONLY for logged in users
+    -Same fridge items, without the check
+    -Show the recipes in more detail
+    -right column is now Items to buy, which will compare what you have vs the ingredients from the recipes
+
 state variables:
 PENDING ALL AUTH VARIABLES
+Temporary variable (isLoggedIn)
 
 -fridgeIngredients = []
 -searchQuery
