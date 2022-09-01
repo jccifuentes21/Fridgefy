@@ -1,10 +1,13 @@
 .container{
   display: flex;
   width: 100%;
-  height: calc(100vh - 4rem);
+  /* height: calc(100vh - 4rem); */
   justify-content: space-between;
-  padding: 1rem;
   gap: 2rem;
+  background-image: url(../../../public/images/top-decoration.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  padding-top: 130px;
 }
 
 
