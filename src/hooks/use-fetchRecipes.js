@@ -19,6 +19,8 @@ const useFetchRecipes = () => {
     setError(null);
     const { diet, intolerances, cuisine, query, ingredients } = endpoints;
 
+    
+
     let dietURL = returnURL(diet, "diet");
     let intolerancesURL = returnURL(intolerances, "intolerances");
     let cuisineURL = returnURL(cuisine, "cuisine");
@@ -48,6 +50,7 @@ const useFetchRecipes = () => {
       console.log(data.results)
 
       applyFormat(data.results)
+
     } catch(err) {
       console.log(err)
     }
