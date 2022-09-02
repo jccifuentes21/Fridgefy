@@ -1,14 +1,16 @@
+import classes from './RecipeItem.module.css'
 
 const RecipeItem = (props) => {
-
   return (
-    <div>
-      <h1>{props.title}</h1>
-      <img
-        src={props.image}
-        alt=""
-        style={{ width: "300px", height: "300px" }}
-      />
+    <div className={classes["box-recipe"]}>
+      <img className={classes.image} src={props.image} />
+      <div className={classes["more-infos"]}>
+        {" "}
+        <span>{props.title} </span>{" "}
+        <button>
+          <img src="./images/btn-add.png" />
+        </button>
+      </div>
     </div>
   );
 };

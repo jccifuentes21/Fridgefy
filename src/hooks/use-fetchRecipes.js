@@ -34,7 +34,7 @@ const useFetchRecipes = () => {
       cuisineURL +
       ingredientsURL +
       queryURL
-    }&fillIngredients=true`;
+    }&fillIngredients=true&number=15`;
 
     // console.log(url)
 
