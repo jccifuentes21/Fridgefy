@@ -1,37 +1,69 @@
-import { useRef } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 
-import classes from "./MyFridge.module.css";
+import classes from './MyFridge.module.css'
+import Sidebar from "../UI/Sidebar";
+import FridgeItem from "./FridgeItem";
+import FilterContext from "../../store/filters-context";
 
 const MyFridge = () => {
+  const [ingredients, setIngredients] = useState([]);
+  const { addFilterData, filterData, removeFromFilter  } = useContext(FilterContext);
 
   const ingredientInput = useRef();
 
-  const submitHandler = (event) =>{
-    event.preventDefault()
+  //This is where we fetch the ingredients from the db and display them in the page
+  // useEffect(() => {
+  //   setIngredients( <<ingredients from db >> );
+  // }, []);
+
+  const submitHandler = (event) => {
+    event.preventDefault();
 
     const enteredIngredient = ingredientInput.current.value;
 
+    setIngredients((prevState) => {
+      return [...prevState, enteredIngredient];
+    });
+    ingredientInput.current.value = "";
+  };
 
+  const handleDelete = (ingredientTitle) => {
+    setIngredients((prevState)=>{
+      return prevState.filter(item=> item !== ingredientTitle)
+    })
+    console.log(`Delete this ${ingredientTitle} !`);
+  };
 
-  }
+  const checkHandler = (isChecked, ingredientTitle) => {
+    if(isChecked){
+      addFilterData("ingredients", ingredientTitle);
+    } 
+    if(!isChecked){
+      removeFromFilter("ingredients", ingredientTitle)
+    }
+  };
+
   return (
-    <div className={classes['recipes-sidebar']}>
-        <div><h2>My storage</h2> </div>
-        <div>
-          <ul>
-            <li><p>Banana</p> <button><img src="./images/close.png"/></button></li>
-            <li><p>Beef</p> <button><img src="./images/close.png"/></button></li>
-            <li><p>Fish</p> <button><img src="./images/close.png"/></button></li>
-            <li><p>Salsage</p> <button><img src="./images/close.png"/></button></li>
-            <li><p>Onions</p> <button><img src="./images/close.png"/></button></li>
-            <li><p>Tomato</p> <button><img src="./images/close.png"/></button></li>
-            <li><p>Potato</p> <button><img src="./images/close.png"/></button></li>
-            <li><p>Muzzarella</p> <button><img src="./images/close.png"/></button></li>
-          </ul>
-        </div>      
- 
-    </div>
-  )
+    <>
+      <Sidebar title="My Fridge">
+        <form className={classes['form-control']} onSubmit={submitHandler}>
+          <input placeholder="Add an ingredient..." ref={ingredientInput} />
+          <button>Add</button>
+        </form>
+        {ingredients.map((ingredient, i) => {
+          return (
+            <FridgeItem
+              key={`Ing-${i}`}
+              title={ingredient}
+              handleDelete={handleDelete}
+              checkHandler={checkHandler}
+            />
+          );
+        })}
+        {ingredients.length > 0 && <p>Select items to filter the search</p>}
+      </Sidebar>
+    </>
+  );
 };
 
 export default MyFridge;

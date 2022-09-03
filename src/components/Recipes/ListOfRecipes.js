@@ -8,7 +8,8 @@ import classes from "./ListOfRecipes.module.css";
 import AuthContext from "../../store/auth-context";
 
 const ListOfRecipes = () => {
-  const { filterData, addFilterData } = useContext(FilterContext);
+  const { filterData, updateQuery, clearAllFilters, clearFilter } =
+    useContext(FilterContext);
 
   const { isLoggedIn } = useContext(AuthContext);
   const queryInput = useRef();
@@ -32,31 +33,31 @@ const ListOfRecipes = () => {
     setRecipes(recipeResults);
   };
 
-  useEffect(()=>{
-    sendRequest(filterData, transformData)
-  }, [])
+  useEffect(() => {
+    clearAllFilters();
+    setTimeout(() => {
+      sendRequest(filterData, transformData);
+    }, 150);
+  }, []);
 
   const submitHandler = (event) => {
     event.preventDefault();
-
-    sendRequest(filterData, transformData);
-  };
-
-  const handleQueryChange = () => {
     const enteredQuery = queryInput.current.value;
-
     const queryData = enteredQuery.split(" ");
+    
+    updateQuery(queryData);
+    sendRequest(filterData, transformData);
 
-    addFilterData("query", queryData);
   };
 
   return (
     <Container
-      classes={`${classes['main-container']} ${isLoggedIn ? classes.isLogged : classes.isNotLogged}`}
+      classes={`${classes["main-container"]} ${
+        isLoggedIn ? classes.isLogged : classes.isNotLogged
+      }`}
     >
       <form onSubmit={submitHandler}>
         <input
-          onChange={handleQueryChange}
           type="text"
           placeholder="Search for a recipe..."
           ref={queryInput}

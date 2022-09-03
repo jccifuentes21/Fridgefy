@@ -2,6 +2,10 @@ import React, { useState } from "react";
 
 const FilterContext = React.createContext({
   addFilterData: () => {},
+  clearAllFilters: () => {},
+  clearFilter: () => {},
+  removeFromFilter: () => {},
+  updateQuery: () => {},
   filterData: {},
 });
 
@@ -14,15 +18,50 @@ export const FilterContextProvider = (props) => {
     query: [],
   });
 
-  const addFilterDataHandler = (filterName, data) => {
+  const addFilterData= (filterName, data) => {
     setFilterData((prevState) => {
-      return { ...prevState, [filterName]: [data] };
+      return { ...prevState, [filterName]: [...prevState[filterName], data] };
+    });
+  };
+
+  const updateQuery = (data) => {
+    setFilterData((prevState) => {
+      return { ...prevState, query: data };
+    });
+  };
+
+  const clearAllFilters = () => {
+    setFilterData({
+      diet: [],
+      intolerances: [],
+      cuisine: [],
+      ingredients: [],
+      query: [],
+    });
+  };
+
+  const clearFilter = (filterName) => {
+    setFilterData((prevState) => {
+      return { ...prevState, [filterName]: [] };
+    });
+  };
+
+  const removeFromFilter = (filterName, data) => {
+    setFilterData((prevState) => {
+      return {
+        ...prevState,
+        [filterName]: [...prevState[filterName].filter((item) => item != data)],
+      };
     });
   };
 
   const contextValue = {
     filterData: filterData,
-    addFilterData: addFilterDataHandler,
+    addFilterData,
+    clearAllFilters,
+    clearFilter,
+    removeFromFilter,
+    updateQuery,
   };
 
   return (
