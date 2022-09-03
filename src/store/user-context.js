@@ -3,8 +3,9 @@ import React, { useContext, useState } from "react";
 const UserContext = React.createContext({
   userRecipes: [],
   userIngredients: [],
-  addRecipes: () => {},
-  removeRecipes: () => {},
+  addRecipe: () => {},
+  removeRecipe: () => {},
+  setRecipes: () => {},
   addIngredient: () => {},
   removeIngredient: () => {},
   setIngredients: () => {},
@@ -15,12 +16,20 @@ export const UserContextProvider = (props) => {
   const [userRecipes, setUserRecipes] = useState([]);
   const [userIngredients, setUserIngredients] = useState([]);
 
-  const addRecipes = (recipes) => {
-    setUserRecipes(recipes);
+  const addRecipe = (recipes) => {
+    setUserRecipes((prevState) => {
+      return [...prevState, recipes];
+    });
   };
 
-  const removeRecipes = () => {
-    setUserRecipes([]);
+  const removeRecipe = (recipe) => {
+    setUserRecipes((prevState) => {
+      return prevState.filter((item) => item.id !== recipe.id);
+    });
+  };
+
+  const setRecipes = (recipes) => {
+    setUserRecipes(recipes);
   };
 
   const setIngredients = (ingredients) => {
@@ -40,15 +49,16 @@ export const UserContextProvider = (props) => {
   };
 
   const logOutClear = () => {
-    setUserIngredients([])
-    setUserRecipes([])
+    setUserIngredients([]);
+    setUserRecipes([]);
   };
 
   const contextValue = {
     userRecipes,
     userIngredients,
-    addRecipes,
-    removeRecipes,
+    addRecipe,
+    removeRecipe,
+    setRecipes,
     setIngredients,
     addIngredient,
     removeIngredient,

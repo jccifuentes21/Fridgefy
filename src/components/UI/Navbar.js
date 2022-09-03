@@ -9,7 +9,7 @@ import classes from "./Navbar.module.css";
 
 const Navbar = () => {
   const { login, logout, isLoggedIn, userInfo, UID } = useContext(AuthContext);
-  const { logOutClear, userIngredients } = useContext(UserContext);
+  const { logOutClear, userIngredients, userRecipes } = useContext(UserContext);
 
   const handleLogin = () => {
     signInWithGoogle(login);
@@ -17,14 +17,19 @@ const Navbar = () => {
 
   const handleLogout = () => {
     if (userIngredients.length === 0) {
-      console.log('no ingredients left...')
-      console.log('UID = '+ UID)
-      setDoc(doc(db, "tbUsers", UID), { ingredients: [] });
+      setTimeout(() => {
+        setDoc(doc(db, "tbUsers", UID), { ingredients: [] });
+      }, 150);
+    }
+    if (userRecipes.length === 0) {
+      setTimeout(() => {
+        setDoc(doc(db, "tbUsers", UID), { recipes: [] });
+      }, 150);
     }
     signUserOut(logout);
     setTimeout(() => {
       logOutClear();
-    }, 150);
+    }, 300);
   };
 
   // const handleCurrent = () => {

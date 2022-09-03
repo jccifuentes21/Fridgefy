@@ -1,5 +1,5 @@
 import { useCallback, useContext, useEffect, useRef, useState } from "react";
-import { doc, DocumentSnapshot, getDoc, setDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../store/Firebase";
 
 import classes from "./MyFridge.module.css";
@@ -10,7 +10,6 @@ import AuthContext from "../../store/auth-context";
 import UserContext from "../../store/user-context";
 
 const MyFridge = () => {
-  // const [ingredients, setIngredients] = useState([]);
   const { userIngredients, setIngredients, addIngredient, removeIngredient } =
     useContext(UserContext);
   const { addFilterData, removeFromFilter } = useContext(FilterContext);
@@ -37,15 +36,11 @@ const MyFridge = () => {
 
   useEffect(() => {
     if (userIngredients.length !== 0) {
-      setDoc(userDocRef, { ingredients: userIngredients });
+      updateDoc(userDocRef, { ingredients: userIngredients });
     }
-    return () => {
-      console.log("unmounted");
-    };
   }, [userIngredients]);
 
-  // useEffect(() => {
-  // }, [ingredients]);
+
 
   const submitHandler = (event) => {
     event.preventDefault();
@@ -54,7 +49,6 @@ const MyFridge = () => {
 
     addIngredient(enteredIngredient);
 
-    // setDoc(userDocRef, { ingredients: ingredients });
     ingredientInput.current.value = "";
   };
 
