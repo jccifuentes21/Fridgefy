@@ -1,23 +1,30 @@
 import { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import AuthContext from "../../store/auth-context";
-import {
-  // getUserData,
-  signInWithGoogle,
-  signUserOut,
-} from "../../store/Firebase";
+import { signInWithGoogle, signUserOut, db } from "../../store/Firebase";
+import { doc, setDoc } from "firebase/firestore";
+import UserContext from "../../store/user-context";
 
 import classes from "./Navbar.module.css";
 
 const Navbar = () => {
-  const { login, logout, isLoggedIn, userInfo } = useContext(AuthContext);
+  const { login, logout, isLoggedIn, userInfo, UID } = useContext(AuthContext);
+  const { logOutClear, userIngredients } = useContext(UserContext);
 
   const handleLogin = () => {
     signInWithGoogle(login);
   };
 
   const handleLogout = () => {
+    if (userIngredients.length === 0) {
+      console.log('no ingredients left...')
+      console.log('UID = '+ UID)
+      setDoc(doc(db, "tbUsers", UID), { ingredients: [] });
+    }
     signUserOut(logout);
+    setTimeout(() => {
+      logOutClear();
+    }, 150);
   };
 
   // const handleCurrent = () => {
@@ -64,7 +71,10 @@ const Navbar = () => {
           )}
         </div>
       </div>
-      <img className={classes['navbar-decoration']} src="./images/top-decoration.png"/>
+      <img
+        className={classes["navbar-decoration"]}
+        src="./images/top-decoration.png"
+      />
     </>
   );
 };

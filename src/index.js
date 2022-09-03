@@ -6,14 +6,17 @@ import "./index.css";
 import App from "./App";
 import { AuthContextProvider } from "./store/auth-context";
 import { FilterContextProvider } from "./store/filters-context";
+import { UserContextProvider } from "./store/user-context";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <BrowserRouter>
-    <FilterContextProvider>
-      <AuthContextProvider>
-        <App />
-      </AuthContextProvider>
-    </FilterContextProvider>
+    <UserContextProvider>
+      <FilterContextProvider>
+        <AuthContextProvider>
+          <App />
+        </AuthContextProvider>
+      </FilterContextProvider>
+    </UserContextProvider>
   </BrowserRouter>
 );

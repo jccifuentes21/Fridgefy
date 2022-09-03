@@ -31,6 +31,7 @@ export const signInWithGoogle = (login) =>{
   signInWithPopup(auth, provider)
       .then((result) => {
         login(result.user);
+        
       })
       .catch((err) => {
         console.log("Error", err);
