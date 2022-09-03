@@ -2,7 +2,7 @@ import { useState } from "react";
 import classes from "./FridgeItem.module.css";
 
 const FridgeItem = (props) => {
-  const [canDelete, setCanDelete] = useState(null)
+  const [canDelete, setCanDelete] = useState(true)
   const handleDelete = () => {
     if(canDelete){
       props.handleDelete(props.title);

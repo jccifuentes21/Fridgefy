@@ -56,12 +56,13 @@ const ListOfRecipes = () => {
         isLoggedIn ? classes.isLogged : classes.isNotLogged
       }`}
     >
-      <form onSubmit={submitHandler}>
+      <form className={classes['form-control']} onSubmit={submitHandler}>
         <input
           type="text"
           placeholder="Search for a recipe..."
           ref={queryInput}
         />
+        <button>Search</button>
       </form>
       <div className={classes["list-of-recipes"]}>
         {recipes.map((recipe) => {

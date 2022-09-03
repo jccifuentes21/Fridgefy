@@ -1,7 +1,11 @@
+import MyFridge from "../store/FridgeFirebase"
 
 const WelcomePage = () => {
   return (
-    <div>WelcomePage</div>
+    <div>WelcomePage
+      <MyFridge />
+    </div>
+
   )
 }
 

@@ -17,7 +17,6 @@
   padding: 14px 10px;
   outline: none;
   display: flex;
-  margin-bottom: 20px;
   width: 400px;
 }
 
@@ -33,4 +32,25 @@
   justify-content: center;
   gap: 20px;
   color: white;
+}
+
+.form-control{
+  display: flex;
+  align-items: center;
+}
+
+.form-control button{
+  background: none;
+  border: 1px solid #FFBD00;
+  border-radius: 0.5rem;
+  color: #FFBD00;
+  padding: 0.5rem;
+  transition: 150ms;
+}
+
+.form-control button:hover{
+  background-color: #FFBD00;
+  color: white;
+  transition: 150ms;
+  cursor: pointer;
 }

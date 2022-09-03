@@ -1,0 +1,18 @@
+.main-container{
+  flex-direction: column;
+  text-align: center;
+}
+
+.main-container h2{
+  text-transform: uppercase;
+  color: #ffbd00;
+  text-align: left;
+}
+
+.logged{
+  width: 70%;
+}
+
+.notLogged{
+  width: 100%;
+}
