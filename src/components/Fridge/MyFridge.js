@@ -30,6 +30,9 @@ const MyFridge = () => {
       return [...prevState, enteredIngredient];
     });
     ingredientInput.current.value = "";
+    setIngredientsAutoComplete({
+      list: [],
+    });
   };
 
   const handleDelete = (ingredientTitle) => {
