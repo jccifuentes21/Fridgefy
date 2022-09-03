@@ -48,7 +48,8 @@ const MyFridge = () => {
       <Sidebar title="My Fridge">
         <form className={classes['form-control']} onSubmit={submitHandler}>
           <input placeholder="Add an ingredient..." ref={ingredientInput} />
-          <button>Add</button>
+
+          <button>Addd</button>
         </form>
         {ingredients.map((ingredient, i) => {
           return (
