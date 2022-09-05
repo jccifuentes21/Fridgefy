@@ -107,6 +107,7 @@ const MyFridge = () => {
 
   const handleHelperAutoComplete = (e) => {
     ingredientInput.current.value = e;
+    setIngredientsAutoComplete({list: []})
   };
 
   return (
