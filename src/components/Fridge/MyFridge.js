@@ -1,44 +1,70 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useCallback, useContext, useEffect, useRef, useState } from "react";
+import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
+import { db } from "../../store/Firebase";
+
 import classes from "./MyFridge.module.css";
 import Sidebar from "../UI/Sidebar";
 import FridgeItem from "./FridgeItem";
 import FilterContext from "../../store/filters-context";
+import AuthContext from "../../store/auth-context";
+import UserContext from "../../store/user-context";
 import axios from "axios";
+
 
 const apiKey = `apiKey=${process.env.REACT_APP_apiKey}`;
 
 const MyFridge = () => {
-  const [ingredients, setIngredients] = useState([]);
-  const { addFilterData, filterData, removeFromFilter } =
-    useContext(FilterContext);
+  const { userIngredients, setIngredients, addIngredient, removeIngredient } =
+    useContext(UserContext);
+  const { addFilterData, removeFromFilter } = useContext(FilterContext);
+  const { UID } = useContext(AuthContext);
+  const userDocRef = doc(db, "tbUsers", UID);
+
+  const ingredientInput = useRef();
   const [ingredientsAutoComplete, setIngredientsAutoComplete] = useState({
     list: [],
   });
-  const ingredientInput = useRef();
+
+  const getUserFridge = async () => {
+    const data = await getDoc(userDocRef);
+
+    if (data.exists()) {
+      if (data.data().ingredients) {
+        setIngredients(data.data().ingredients);
+        console.log(data.data().ingredients);
+      }
+    }
+  };
 
   //This is where we fetch the ingredients from the db and display them in the page
-  // useEffect(() => {
-  //   setIngredients( <<ingredients from db >> );
-  // }, []);
+  useEffect(() => {
+    getUserFridge();
+  }, []);
+
+  useEffect(() => {
+    if (userIngredients.length !== 0) {
+      updateDoc(userDocRef, { ingredients: userIngredients });
+    }
+  }, [userIngredients]);
+
+
 
   const submitHandler = (event) => {
     event.preventDefault();
 
     const enteredIngredient = ingredientInput.current.value;
 
-    setIngredients((prevState) => {
-      return [...prevState, enteredIngredient];
-    });
+    addIngredient(enteredIngredient);
+
     ingredientInput.current.value = "";
+
     setIngredientsAutoComplete({
       list: [],
     });
   };
 
   const handleDelete = (ingredientTitle) => {
-    setIngredients((prevState) => {
-      return prevState.filter((item) => item !== ingredientTitle);
-    });
+    removeIngredient(ingredientTitle);
     console.log(`Delete this ${ingredientTitle} !`);
   };
 
@@ -50,6 +76,7 @@ const MyFridge = () => {
       removeFromFilter("ingredients", ingredientTitle);
     }
   };
+
 
   //GET AUTOCOMPLETE INGREDIENTS FUNCTION
   const getIngredientsByAutoComplete = (ingredientTyped) => {
@@ -86,12 +113,7 @@ const MyFridge = () => {
     <>
       <Sidebar title="My Fridge">
         <form className={classes["form-control"]} onSubmit={submitHandler}>
-          <input
-            placeholder="Add an ingredient..."
-            onChange={(e) => handleChangeIngredient(e)}
-            ref={ingredientInput}
-          />
-
+          <input placeholder="Add an ingredient..." onChange={(e) => handleChangeIngredient(e)} ref={ingredientInput} />
           <button>Add</button>
         </form>
 
@@ -115,17 +137,20 @@ const MyFridge = () => {
           ))}
         </ul>
 
-        {ingredients.map((ingredient, i) => {
-          return (
-            <FridgeItem
-              key={`Ing-${i}`}
-              title={ingredient}
-              handleDelete={handleDelete}
-              checkHandler={checkHandler}
-            />
-          );
-        })}
-        {ingredients.length > 0 && <p>Select items to filter the search</p>}
+        <ul>
+          {userIngredients.length > 0 &&
+            userIngredients.map((ingredient, i) => {
+              return (
+                <FridgeItem
+                  key={`Ing-${i}`}
+                  title={ingredient}
+                  handleDelete={handleDelete}
+                  checkHandler={checkHandler}
+                />
+              );
+            })}
+        </ul>
+        {userIngredients.length > 0 && <p>Select items to filter the search</p>}
       </Sidebar>
     </>
   );
