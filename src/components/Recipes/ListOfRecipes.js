@@ -21,9 +21,9 @@ const ListOfRecipes = () => {
   } = useContext(UserContext);
   const { isLoggedIn, UID } = useContext(AuthContext);
   const queryInput = useRef();
-  let userDocRef ;
+  let userDocRef;
 
-  if(UID){
+  if (UID) {
     userDocRef = doc(db, "tbUsers", UID);
   }
 
