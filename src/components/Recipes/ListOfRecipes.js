@@ -116,7 +116,7 @@ const ListOfRecipes = () => {
       }
     }
     return () => {
-      if (userRecipes.length === 0) {
+      if (userRecipes.length === 0 && isLoggedIn) {
         updateDoc(userDocRef, { recipes: [] });
       }
     };
