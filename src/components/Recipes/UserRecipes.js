@@ -24,8 +24,4 @@ const UserRecipes = () => {
   );
 };
 
-// ${
-//   isLoggedIn ? classes.logged : classes.notLogged
-// }
-
 export default UserRecipes;

@@ -81,9 +81,6 @@ const UserRecipeItem = ({ title, image, id }) => {
               <p>{`${recipeInfo.readyInMinutes} minutes`}</p>
             </div>
           </div>
-          {/* <div>
-            <img src="./images/recipe.png" />
-          </div> */}
         </div>
       </div>
     </>
