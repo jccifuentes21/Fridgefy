@@ -19,16 +19,6 @@ const Navbar = () => {
   };
 
   const handleLogout = () => {
-    if (userIngredients.length === 0) {
-      setTimeout(() => {
-        setDoc(doc(db, "tbUsers", UID), { ingredients: [] });
-      }, 150);
-    }
-    if (userRecipes.length === 0) {
-      setTimeout(() => {
-        setDoc(doc(db, "tbUsers", UID), { recipes: [] });
-      }, 150);
-    }
     signUserOut(logout);
     setTimeout(() => {
       logOutClear();
