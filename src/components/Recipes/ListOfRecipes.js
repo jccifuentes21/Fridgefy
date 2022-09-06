@@ -1,7 +1,7 @@
 import useFetchRecipes from "../../hooks/use-fetchRecipes";
 import { useContext, useEffect, useRef, useState } from "react";
 import { db } from "../../store/Firebase";
-import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 
 import FilterContext from "../../store/filters-context";
 

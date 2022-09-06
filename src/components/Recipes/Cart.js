@@ -1,4 +1,3 @@
-import classes from "./Cart.module.css";
 import Sidebar from "../UI/Sidebar";
 import RecipeCartItem from "./RecipeCartItem";
 import { useContext } from "react";

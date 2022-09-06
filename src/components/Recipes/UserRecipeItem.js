@@ -4,7 +4,7 @@ import ItemsToBuyContext from "../../store/itemsToBuy-context";
 import classes from "./UserRecipeItem.module.css";
 
 const UserRecipeItem = ({ title, image, id }) => {
-  const { itemsToBuy, addItemsToBuy, clearItemsToBuy } =
+  const { addItemsToBuy, clearItemsToBuy } =
     useContext(ItemsToBuyContext);
   const { isLoggedIn } = useContext(AuthContext);
   const [isOpen, setIsOpen] = useState(false);
@@ -81,9 +81,6 @@ const UserRecipeItem = ({ title, image, id }) => {
               <p>{`${recipeInfo.readyInMinutes} minutes`}</p>
             </div>
           </div>
-          {/* <div>
-            <img src="./images/recipe.png" />
-          </div> */}
         </div>
       </div>
     </>

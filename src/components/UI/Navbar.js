@@ -2,7 +2,6 @@ import { useContext } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import AuthContext from "../../store/auth-context";
 import { signInWithGoogle, signUserOut, db } from "../../store/Firebase";
-import { doc, setDoc } from "firebase/firestore";
 import UserContext from "../../store/user-context";
 
 import classes from "./Navbar.module.css";
@@ -27,9 +26,6 @@ const Navbar = () => {
 
   };
 
-  // const handleCurrent = () => {
-  //   getUserData();
-  // };
 
   return (
     <>
