@@ -1,22 +1,91 @@
+import { useContext } from "react";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import AuthContext from "../../store/auth-context";
+import { signInWithGoogle, signUserOut, db } from "../../store/Firebase";
+import { doc, setDoc } from "firebase/firestore";
+import UserContext from "../../store/user-context";
+
 import classes from "./Navbar.module.css";
 
 const Navbar = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { login, logout, isLoggedIn, userInfo, UID } = useContext(AuthContext);
+  const { logOutClear, userIngredients, userRecipes } = useContext(UserContext);
+
+  const handleLogin = () => {
+    signInWithGoogle(login, ()=> navigate('/recipes'));
+
+  };
+
+  const handleLogout = () => {
+    if (userIngredients.length === 0) {
+      setTimeout(() => {
+        setDoc(doc(db, "tbUsers", UID), { ingredients: [] });
+      }, 150);
+    }
+    if (userRecipes.length === 0) {
+      setTimeout(() => {
+        setDoc(doc(db, "tbUsers", UID), { recipes: [] });
+      }, 150);
+    }
+    signUserOut(logout);
+    setTimeout(() => {
+      logOutClear();
+      navigate('/welcome')
+    }, 300);
+
+  };
+
+  // const handleCurrent = () => {
+  //   getUserData();
+  // };
+
   return (
-    <div className={classes["nav-bar"]}>
-      <img src="./images/logo.png"/>
+    <>
+      <div className={classes["nav-bar"]}>
+        <img src="./images/logo.png" />
 
         <ul>
-          <li><a href="#">Home</a></li>
-          <li><a href="#">Recipes</a></li>
-          <li><a href="#">My shopping list</a></li>
+          <li>
+            <NavLink to="/welcome">Home</NavLink>
+          </li>
+          <li>
+            <NavLink to="/recipes" className={classes["nav-buttons"]}>
+              Recipes
+            </NavLink>
+          </li>
+          <li>
+            {isLoggedIn && (
+              <NavLink to="/shopping-list">My Shopping List</NavLink>
+            )}
+          </li>
         </ul>
- 
-      <div className={classes['button-group']}>
-        <p>Hello, user!</p>
-        <button className={classes['log-buttons']}> <img src="./images/btn-login.png"/> Login</button>
-        {/* <button className={classes['log-buttons']}> <img src="./images/btn-logout.png"/> Logout</button> */}
+        <div className={classes["button-group"]}>
+          {isLoggedIn && <p>Hello, {userInfo.displayName}!</p>}
+
+          {!isLoggedIn && (
+            <button className={classes["log-buttons"]} onClick={handleLogin}>
+              <img src="./images/btn-login.png" />
+              Login
+            </button>
+          )}
+          {/* <button className={classes["log-buttons"]} onClick={handleCurrent}>
+          Current
+        </button> */}
+          {isLoggedIn && (
+            <button className={classes["log-buttons"]} onClick={handleLogout}>
+              <img src="./images/btn-logout.png" />
+              Logout
+            </button>
+          )}
+        </div>
       </div>
-    </div>
+      {location.pathname !=='/welcome' && <img
+        className={classes["navbar-decoration"]}
+        src="./images/top-decoration.png"
+      />}
+    </>
   );
 };
 

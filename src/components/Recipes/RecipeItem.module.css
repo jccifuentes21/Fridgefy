@@ -1,0 +1,27 @@
+.more-infos{
+  background-color: #FFBD00;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.15rem 0.25rem;
+  min-height: 3.5rem;
+}
+
+.box-recipe{
+  display: flex;
+  flex-direction: column;
+  color: white;
+  font-weight: 300;
+  width: 265px;
+}
+
+.image{
+  width: 265px;
+}
+
+
+.box-recipe button{
+  border: none;
+  cursor: pointer;
+  background-color: transparent;
+}

@@ -1,7 +1,9 @@
+import Homepage from "../components/UI/Homepage"
 
 const WelcomePage = () => {
   return (
-    <div>WelcomePage</div>
+    <Homepage />
+
   )
 }
 

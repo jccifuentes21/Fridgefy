@@ -1,0 +1,109 @@
+.main-container{
+  flex-direction: column;
+  align-items: center;
+}
+.isNotLogged{
+  width: 100%;
+}
+
+.isLogged{
+  width: 70%;
+}
+
+.main-container input{
+  border: 1px solid #FFBD00;
+  border-radius: 1rem;
+  font-size: 16px;
+  padding: 14px 10px;
+  outline: none;
+  display: flex;
+  width: 400px;
+}
+
+
+.main-container input::placeholder{
+  color: #FFBD00;
+}
+
+.list-of-recipes{
+  margin: 20px 0 20px 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  color: white;
+}
+
+.form-control{
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.form-control button{
+  background: none;
+  border: 1px solid #FFBD00;
+  border-radius: 0.5rem;
+  color: #FFBD00;
+  padding: 0.5rem;
+  transition: 150ms;
+}
+
+.form-control button:hover{
+  background-color: #FFBD00;
+  color: white;
+  transition: 150ms;
+  cursor: pointer;
+}
+
+.filters{
+  width: 90%;
+  border-radius: 1rem;
+  color: white;
+  padding: 1.5rem;
+  background-color: #FFBD00;
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.filters h2{
+  align-self: flex-end;
+  text-transform: uppercase;
+  margin: 0.25rem;
+}
+
+.filter-header{
+  display: flex;
+  flex-direction: column;
+}
+
+.filters h3{
+  text-transform: uppercase;
+}
+
+.filter-container{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 0;
+}
+
+.filter-container li{
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0.25rem;
+}
+
+.filter-container input{
+  width: fit-content;
+  margin: 0.25rem;
+  margin-top: 0.45rem;
+}
+
+.filter-container span{
+  margin: 0.25rem;
+}

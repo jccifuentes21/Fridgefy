@@ -4,7 +4,7 @@
   justify-content: space-around;
   background-color: #FF5400;
   color: black;
-  height: 70px;
+  /* height: 70px; */
 }
 
 .nav-bar ul {
@@ -52,12 +52,26 @@
 
 .log-buttons{
   margin: 0 0.5rem;
-  border: none;
+  padding: 0.25rem;
+  border: solid 1px transparent;
   background-color: transparent;
   color: white;
   font-size: 16px;
   text-transform: uppercase;
   display: flex;
   align-items: center;
+  cursor: pointer;
+  transition: all 0.4s;
+}
+
+.log-buttons:hover{
+  border: solid 1px white;
+  transition: all 0.4s;
+}
+
+.navbar-decoration{
+  width: 100%;
+  height: auto;
+  padding-bottom: 1.5rem;
 }
 
