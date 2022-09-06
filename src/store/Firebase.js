@@ -27,11 +27,11 @@ export const auth = getAuth(app);
 
 export const provider = new GoogleAuthProvider();
 
-export const signInWithGoogle = (login) =>{
+export const signInWithGoogle = (login, action) =>{
   signInWithPopup(auth, provider)
       .then((result) => {
         login(result.user);
-        
+        action()
       })
       .catch((err) => {
         console.log("Error", err);

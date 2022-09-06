@@ -27,6 +27,10 @@
   margin-top: 8px;
 }
 
+.accordion img{
+  height: 8rem;
+}
+
 .active,
 .accordion:hover {
   background-color: rgb(236, 236, 236);
@@ -46,6 +50,9 @@
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  background-color: #dfdede;
+  border-bottom-left-radius: 1rem;
+  border-bottom-right-radius: 1rem;
 }
 
 .recipe-list ul {
@@ -56,9 +63,16 @@
   text-align: left;
   list-style: none;
   line-height: 24px;
-  text-transform: uppercase;
+  text-transform: capitalize;
 }
 .recipe-list img {
   border-radius: 20px 20px 20px 0;
   max-width: 90%;
+}
+
+.recipe-details{
+  display: flex;
+  width: 100%;
+  padding: 0 2rem;
+  justify-content: space-between;
 }

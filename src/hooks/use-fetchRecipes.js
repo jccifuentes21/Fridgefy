@@ -47,7 +47,6 @@ const useFetchRecipes = () => {
 
       const data = await response.json();
 
-      console.log(data.results)
 
       applyFormat(data.results)
 

@@ -8,7 +8,6 @@ const Cart = (props) => {
   const { userRecipes, removeRecipe } = useContext(UserContext);
 
   const handleDelete = (recipe) =>{
-    console.log(recipe)
     removeRecipe(recipe)
   }
   return (

@@ -10,9 +10,10 @@ import Container from "../UI/Container";
 import classes from "./ListOfRecipes.module.css";
 import AuthContext from "../../store/auth-context";
 import UserContext from "../../store/user-context";
+import FilterItem from "./FilterItem";
 
 const ListOfRecipes = () => {
-  const { filterData, updateQuery, clearAllFilters } =
+  const { filterData, updateQuery, clearAllFilters, addFilterData, removeFromFilter } =
     useContext(FilterContext);
   const {
     userRecipes,
@@ -22,6 +23,63 @@ const ListOfRecipes = () => {
   const { isLoggedIn, UID } = useContext(AuthContext);
   const queryInput = useRef();
   let userDocRef;
+
+  const cuisines = [
+    "African",
+    "American",
+    "British",
+    "Cajun",
+    "Caribbean",
+    "Chinese",
+    "Eastern European",
+    "European",
+    "French",
+    "German",
+    "Greek",
+    "Indian",
+    "Irish",
+    "Italian",
+    "Japanese",
+    "Jewish",
+    "Korean",
+    "Latin American",
+    "Mediterranean",
+    "Mexican",
+    "Middle Eastern",
+    "Nordic",
+    "Southern",
+    "Spanish",
+    "Thai",
+    "Vietnamese",
+  ];
+
+  const diets = [
+    "GlutenFree",
+    "Ketogenic",
+    "Vegetarian",
+    "Lacto Vegetarian",
+    "Ovo Vegetarian",
+    "Vegan",
+    "Pescetarian",
+    "Paleo",
+    "Primal",
+    "LowFODMAP",
+    "Whole30",
+  ];
+
+  const intolerances = [
+    "Dairy",
+    "Egg",
+    "Gluten",
+    "Grain",
+    "Peanut",
+    "Seafood",
+    "Shellfish",
+    "Soy",
+    "Sulfite",
+    "Tree Nut",
+    "Wheat",
+  ];
 
   if (UID) {
     userDocRef = doc(db, "tbUsers", UID);
@@ -36,7 +94,6 @@ const ListOfRecipes = () => {
     if (data.exists()) {
       if (data.data().recipes) {
         setUserRecipes(data.data().recipes);
-        console.log(data.data().recipes);
       }
     }
   };
@@ -92,7 +149,14 @@ const ListOfRecipes = () => {
 
   const addRecipeHandler = (recipeInfo) => {
     addRecipe(recipeInfo);
-    console.log("Add recipe " + recipeInfo.title);
+  };
+
+  const filterCheckHandler = (title, type, isChecked) => {
+    if (isChecked) {
+      addFilterData(type, title)
+    } else {
+      removeFromFilter(type, title)
+    }
   };
 
   return (
@@ -110,6 +174,39 @@ const ListOfRecipes = () => {
         />
         <button>Search</button>
       </form>
+      <div className={classes.filters}>
+        <h2>Filters</h2>
+        <div className={classes["filter-header"]}>
+          <h3>Cuisine</h3>
+          <ul className={classes["filter-container"]}>
+            {cuisines.map((cuisine, index) => {
+              return (
+                <FilterItem key={`fil-${index}`} title={cuisine} filterCheckHandler={filterCheckHandler} type='cuisine'/>
+              );
+            })}
+          </ul>
+        </div>
+        <div className={classes["filter-header"]}>
+          <h3>Diet</h3>
+          <ul className={classes["filter-container"]}>
+            {diets.map((diet, index) => {
+              return (
+                <FilterItem key={`fil-${index}`} title={diet} filterCheckHandler={filterCheckHandler} type='diet'/>
+              );
+            })}
+          </ul>
+        </div>
+        <div className={classes["filter-header"]}>
+          <h3>Intolerances</h3>
+          <ul className={classes["filter-container"]}>
+            {intolerances.map((intolerance, index) => {
+              return (
+                <FilterItem key={`fil-${index}`} title={intolerance} filterCheckHandler={filterCheckHandler} type='intolerance'/>
+              );
+            })}
+          </ul>
+        </div>
+      </div>
       <div className={classes["list-of-recipes"]}>
         {recipes.map((recipe) => {
           return (

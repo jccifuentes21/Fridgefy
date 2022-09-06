@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import AuthContext from "../../store/auth-context";
 import { signInWithGoogle, signUserOut, db } from "../../store/Firebase";
 import { doc, setDoc } from "firebase/firestore";
@@ -8,11 +8,14 @@ import UserContext from "../../store/user-context";
 import classes from "./Navbar.module.css";
 
 const Navbar = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
   const { login, logout, isLoggedIn, userInfo, UID } = useContext(AuthContext);
   const { logOutClear, userIngredients, userRecipes } = useContext(UserContext);
 
   const handleLogin = () => {
-    signInWithGoogle(login);
+    signInWithGoogle(login, ()=> navigate('/recipes'));
+
   };
 
   const handleLogout = () => {
@@ -29,7 +32,9 @@ const Navbar = () => {
     signUserOut(logout);
     setTimeout(() => {
       logOutClear();
+      navigate('/welcome')
     }, 300);
+
   };
 
   // const handleCurrent = () => {
@@ -76,10 +81,10 @@ const Navbar = () => {
           )}
         </div>
       </div>
-      <img
+      {location.pathname !=='/welcome' && <img
         className={classes["navbar-decoration"]}
         src="./images/top-decoration.png"
-      />
+      />}
     </>
   );
 };

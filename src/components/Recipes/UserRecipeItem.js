@@ -1,8 +1,56 @@
-import { useState } from 'react';
-import classes from './UserRecipeItem.module.css'
+import { useState, useEffect, useContext } from "react";
+import AuthContext from "../../store/auth-context";
+import ItemsToBuyContext from "../../store/itemsToBuy-context";
+import classes from "./UserRecipeItem.module.css";
 
-const UserRecipeItem = () => {
-  const [isOpen, setIsOpen] = useState(false)
+const UserRecipeItem = ({ title, image, id }) => {
+  const { itemsToBuy, addItemsToBuy, clearItemsToBuy } =
+    useContext(ItemsToBuyContext);
+  const { isLoggedIn } = useContext(AuthContext);
+  const [isOpen, setIsOpen] = useState(false);
+  const apiKey = process.env.REACT_APP_apiKey;
+  const url = `https://api.spoonacular.com/recipes/${id}/information?includeNutrition=false&apiKey=${apiKey}`;
+  const [recipeInfo, setRecipeInfo] = useState({
+    ingredients: [],
+    readyInMinutes: "",
+    servings: "",
+  });
+
+  //Make a fetch for the specifics of the recipe
+  const fetchRecipeData = async () => {
+    const recipeIngredients = [];
+    const response = await fetch(url);
+
+    const data = await response.json();
+
+    data.extendedIngredients.forEach((ingredient) => {
+      recipeIngredients.push(ingredient.name);
+    });
+
+    addItemsToBuy(recipeIngredients);
+    formatRecipeInfo(data);
+  };
+
+  const formatRecipeInfo = (data) => {
+    const ingredients = [];
+    data.extendedIngredients.forEach((ingredient) => {
+      ingredients.push(ingredient.name);
+    });
+    setRecipeInfo({
+      ingredients: ingredients,
+      readyInMinutes: data.readyInMinutes,
+      servings: data.servings,
+    });
+  };
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      fetchRecipeData();
+    }
+    return () => {
+      clearItemsToBuy();
+    };
+  }, [isLoggedIn]);
 
   return (
     <>
@@ -12,31 +60,30 @@ const UserRecipeItem = () => {
           setIsOpen(!isOpen);
         }}
       >
-        World's Best Lasagna <img src="./images/close.png" />
+        {title} <img alt={`Image of recipe to make ${title}`} src={image} />
       </button>
       <div className={!isOpen && classes["panel"]}>
         <div className={classes["recipe-list"]}>
-          <div>
-            <h2>Recipe</h2>
-            <ul>
-              <li>1 pound sweet Italian sausage¾ pound lean ground beef</li>
-              <li>½ cup water</li>
-              <li>2 tablespoons white sugar</li>
-              <li>1½ teaspoons dried basil leaves</li>
-              <li>½ teaspoon fennel seeds</li>
-              <li>1 teaspoon Italian seasoning</li>
-              <li>1½ teaspoons salt, divided, or to taste</li>
-              <li>¼ teaspoon ground black pepper</li>
-              <li>4 tablespoons chopped fresh parsley</li>
-              <li>12 lasagna noodles</li>
-              <li>16 ounces ricotta cheese</li>
-              <li>1 egg</li>
-              <li>¾ pound mozzarella cheese, sliced</li>
-            </ul>
+          <div className={classes['recipe-details']}>
+            <div>
+              <h2>Ingredients</h2>
+              <ul>
+                {recipeInfo.ingredients.length > 0 &&
+                  recipeInfo.ingredients.map((ingredient, index) => {
+                    return <li key={`rii-${index}`}>{ingredient}</li>;
+                  })}
+              </ul>
+            </div>
+            <div>
+              <h3>Servings</h3>
+              <p>{`${recipeInfo.servings} servings`}</p>
+              <h3>Ready in:</h3>
+              <p>{`${recipeInfo.readyInMinutes} minutes`}</p>
+            </div>
           </div>
-          <div>
+          {/* <div>
             <img src="./images/recipe.png" />
-          </div>
+          </div> */}
         </div>
       </div>
     </>

@@ -6,16 +6,15 @@ import RecipesPage from "./pages/RecipesPage";
 import MyShoppingList from "./pages/MyShoppingList";
 
 function App() {
-
   return (
     <>
-    <Navbar />
-    <Routes>
-      <Route path="/" element={<Navigate replace to="/welcome"/>}/>
-      <Route path="/welcome" element={<WelcomePage />}/>
-      <Route path="/recipes" element={<RecipesPage />} />
-      <Route path="/shopping-list" element={<MyShoppingList />} />
-    </Routes>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Navigate replace to="/welcome" />} />
+        <Route path="/welcome" element={<WelcomePage />} />
+        <Route path="/recipes" element={<RecipesPage />} />
+        <Route path="/shopping-list" element={<MyShoppingList />} />
+      </Routes>
     </>
   );
 }

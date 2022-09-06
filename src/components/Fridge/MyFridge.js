@@ -9,11 +9,14 @@ import FilterContext from "../../store/filters-context";
 import AuthContext from "../../store/auth-context";
 import UserContext from "../../store/user-context";
 
+const apiKey = process.env.REACT_APP_apiKey;
+
 const MyFridge = () => {
   const { userIngredients, setIngredients, addIngredient, removeIngredient } =
     useContext(UserContext);
   const { addFilterData, removeFromFilter } = useContext(FilterContext);
   const { UID } = useContext(AuthContext);
+  const [completeIngredients, setCompleteIngredients] = useState([]);
   const userDocRef = doc(db, "tbUsers", UID);
 
   const ingredientInput = useRef();
@@ -24,7 +27,6 @@ const MyFridge = () => {
     if (data.exists()) {
       if (data.data().ingredients) {
         setIngredients(data.data().ingredients);
-        console.log(data.data().ingredients);
       }
     }
   };
@@ -38,23 +40,44 @@ const MyFridge = () => {
     if (userIngredients.length !== 0) {
       updateDoc(userDocRef, { ingredients: userIngredients });
     }
+    if (userIngredients.length === 0) {
+      updateDoc(userDocRef, { ingredients: [] });
+    }
   }, [userIngredients]);
 
+  const getCompleteIngredients = async (ingredient) => {
+    const url = `https://api.spoonacular.com/food/ingredients/autocomplete?apiKey=${apiKey}&query=${ingredient}&number=5`;
 
+    const response = await fetch(url);
+    const result = [];
+
+    try {
+      if (!response.ok) {
+        throw new Error("Request failed!");
+      }
+      const data = await response.json();
+      data.forEach((ingredient) => result.push(ingredient.name));
+      setCompleteIngredients(result);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const submitHandler = (event) => {
     event.preventDefault();
 
     const enteredIngredient = ingredientInput.current.value;
 
-    addIngredient(enteredIngredient);
+    if (enteredIngredient.trim().length !== 0) {
+      addIngredient(enteredIngredient);
 
-    ingredientInput.current.value = "";
+      ingredientInput.current.value = "";
+      setCompleteIngredients([]);
+    }
   };
 
   const handleDelete = (ingredientTitle) => {
     removeIngredient(ingredientTitle);
-    console.log(`Delete this ${ingredientTitle} !`);
   };
 
   const checkHandler = (isChecked, ingredientTitle) => {
@@ -65,14 +88,38 @@ const MyFridge = () => {
       removeFromFilter("ingredients", ingredientTitle);
     }
   };
+  const changeHandler = (event) => {
+    const enteredInput = event.target.value;
+    getCompleteIngredients(enteredInput);
+  };
+  const handleAutocomplete = (ingredient) => {
+    ingredientInput.current.value = ingredient;
+    setCompleteIngredients([]);
+  };
 
   return (
     <>
       <Sidebar title="My Fridge">
         <form className={classes["form-control"]} onSubmit={submitHandler}>
-          <input placeholder="Add an ingredient..." ref={ingredientInput} />
+          <input
+            placeholder="Add an ingredient..."
+            ref={ingredientInput}
+            onChange={changeHandler}
+            required
+          />
           <button>Add</button>
         </form>
+        <ul className={classes.autocomplete}>
+          {completeIngredients.map((ingredient, index) => {
+            return (
+              <li key={index}>
+                <button onClick={() => handleAutocomplete(ingredient)}>
+                  {ingredient}
+                </button>
+              </li>
+            );
+          })}
+        </ul>
         <ul>
           {userIngredients.length > 0 &&
             userIngredients.map((ingredient, i) => {

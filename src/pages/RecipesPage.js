@@ -13,7 +13,7 @@ const RecipesPage = () => {
     <Container>
       {isLoggedIn && <MyFridge />}
       <ListOfRecipes />
-      {isLoggedIn && <Cart/>}
+        {isLoggedIn && <Cart />}
     </Container>
   );
 };

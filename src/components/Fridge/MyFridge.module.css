@@ -1,4 +1,4 @@
-input{
+.form-control input{
   border: 1px solid #FFBD00;
   border-radius: 1rem;
   font-size: 12px;
@@ -8,7 +8,7 @@ input{
   margin: 0.5rem;
 }
 
-input::placeholder{
+.form-control input::placeholder{
   color: #FFBD00;
 }
 
@@ -31,4 +31,43 @@ input::placeholder{
   background-color: #FFBD00;
   color: white;
   transition: 100ms;
+}
+
+.autocomplete{
+  display: flex;
+  flex-direction: column;
+  width: 10.5rem;
+  align-items: center;
+  margin-top: -0.5rem!important;
+  margin-left: 0.5rem!important;
+  border-bottom-left-radius: 1rem;
+  border-bottom-right-radius: 1rem;
+  border-left: solid 1px #FFBD00;
+  border-right: solid 1px #FFBD00;
+  transition: all ease-in-out 150ms;
+}
+
+.autocomplete button{
+  padding: 0.5rem 1rem;
+  width: 100%;
+}
+
+.autocomplete li{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  background: #e7e7e7;
+}
+
+.autocomplete li:hover{
+  background-color: #ccc;
+}
+
+.autocomplete li:first-child{
+  border-top: 1px solid #FFBD00;
+}
+.autocomplete li:last-child{
+  border-bottom-right-radius: 1rem;
+  border-bottom-left-radius: 1rem;
+  border-bottom: 1px solid #FFBD00;
 }
