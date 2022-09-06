@@ -40,9 +40,11 @@ const MyFridge = () => {
     if (userIngredients.length !== 0) {
       updateDoc(userDocRef, { ingredients: userIngredients });
     }
-    if (userIngredients.length === 0) {
-      updateDoc(userDocRef, { ingredients: [] });
-    }
+    return () => {
+      if (userIngredients.length === 0) {
+        updateDoc(userDocRef, { ingredients: [] });
+      }
+    };
   }, [userIngredients]);
 
   const getCompleteIngredients = async (ingredient) => {

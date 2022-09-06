@@ -13,8 +13,13 @@ import UserContext from "../../store/user-context";
 import FilterItem from "./FilterItem";
 
 const ListOfRecipes = () => {
-  const { filterData, updateQuery, clearAllFilters, addFilterData, removeFromFilter } =
-    useContext(FilterContext);
+  const {
+    filterData,
+    updateQuery,
+    clearAllFilters,
+    addFilterData,
+    removeFromFilter,
+  } = useContext(FilterContext);
   const {
     userRecipes,
     addRecipe,
@@ -110,6 +115,11 @@ const ListOfRecipes = () => {
         updateDoc(userDocRef, { recipes: userRecipes });
       }
     }
+    return () => {
+      if (userRecipes.length === 0) {
+        updateDoc(userDocRef, { recipes: [] });
+      }
+    };
   }, [userRecipes]);
 
   const transformData = (recipesObj) => {
@@ -153,9 +163,9 @@ const ListOfRecipes = () => {
 
   const filterCheckHandler = (title, type, isChecked) => {
     if (isChecked) {
-      addFilterData(type, title)
+      addFilterData(type, title);
     } else {
-      removeFromFilter(type, title)
+      removeFromFilter(type, title);
     }
   };
 
@@ -181,7 +191,12 @@ const ListOfRecipes = () => {
           <ul className={classes["filter-container"]}>
             {cuisines.map((cuisine, index) => {
               return (
-                <FilterItem key={`fil-${index}`} title={cuisine} filterCheckHandler={filterCheckHandler} type='cuisine'/>
+                <FilterItem
+                  key={`fil-${index}`}
+                  title={cuisine}
+                  filterCheckHandler={filterCheckHandler}
+                  type="cuisine"
+                />
               );
             })}
           </ul>
@@ -191,7 +206,12 @@ const ListOfRecipes = () => {
           <ul className={classes["filter-container"]}>
             {diets.map((diet, index) => {
               return (
-                <FilterItem key={`fil-${index}`} title={diet} filterCheckHandler={filterCheckHandler} type='diet'/>
+                <FilterItem
+                  key={`fil-${index}`}
+                  title={diet}
+                  filterCheckHandler={filterCheckHandler}
+                  type="diet"
+                />
               );
             })}
           </ul>
@@ -201,7 +221,12 @@ const ListOfRecipes = () => {
           <ul className={classes["filter-container"]}>
             {intolerances.map((intolerance, index) => {
               return (
-                <FilterItem key={`fil-${index}`} title={intolerance} filterCheckHandler={filterCheckHandler} type='intolerance'/>
+                <FilterItem
+                  key={`fil-${index}`}
+                  title={intolerance}
+                  filterCheckHandler={filterCheckHandler}
+                  type="intolerances"
+                />
               );
             })}
           </ul>
