@@ -9,8 +9,8 @@ import classes from "./Navbar.module.css";
 const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { login, logout, isLoggedIn, userInfo, UID } = useContext(AuthContext);
-  const { logOutClear, userIngredients, userRecipes } = useContext(UserContext);
+  const { login, logout, isLoggedIn, userInfo } = useContext(AuthContext);
+  const { logOutClear } = useContext(UserContext);
 
   const handleLogin = () => {
     signInWithGoogle(login, ()=> navigate('/recipes'));
@@ -56,9 +56,6 @@ const Navbar = () => {
               Login
             </button>
           )}
-          {/* <button className={classes["log-buttons"]} onClick={handleCurrent}>
-          Current
-        </button> */}
           {isLoggedIn && (
             <button className={classes["log-buttons"]} onClick={handleLogout}>
               <img src="./images/btn-logout.png" />
